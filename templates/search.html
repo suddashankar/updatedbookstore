@@ -1,0 +1,22 @@
+{% extends 'home.html' %}
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+
+        {% for book in books %}
+        <div class="col-sm-3">
+            <img src="https://hips.hearstapps.com/vader-prod.s3.amazonaws.com/1607103404-51zVlazs-SL.jpg?crop=1xw:0.987xh;center,top"
+                 height="100" width="120"><br>
+            <a href="/details/{{book.pk}}">{{book.name}}</a><br>
+            {{book.price}}<br>
+            {{book.author}}<br>
+            {{book.category}}<br>
+            <a class="btn btn-primary" href="detail.html">Read More</a><br>
+
+            -------------------------<br>
+        </div>
+        {% endfor %}
+
+    </div>
+</div>
+{% endblock %}

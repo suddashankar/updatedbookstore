@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400" rel="stylesheet">
+
+    <title>Home</title>
+</head>
+<style>
+  .navbar-nav > li{
+  padding-left:30px;
+  padding-right:30px;
+}
+p {
+  font-family: "Roboto", sans-serif;
+}
+</style>
+<body>
+
+<div class="container mt-5">
+    <nav class="navbar navbar-expand-lg navbar-light bg-danger">
+        <a class="navbar-brand" href="#">BookStore</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Books</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Categories
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Psycology</a>
+                        <a class="dropdown-item" href="#">Philosophy</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Technology</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="#">History</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="#">History</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="#">History</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="#">History</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="#">History</a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+    <br>
+    <img src="https://www.wamc.org/sites/wamc/files/styles/x_large/public/202001/bookpicks010720.jpg" alt=""
+         width="1110" height="304">
+    <br>
+    <br>
+</div>
+{% block content %}
+<div class="container">
+    <form class="form-inline my-2 my-lg-0" style="float:right;" method="post" action="{% url 'search'%}">
+        {% csrf_token %}
+        <input class="form-control" type="search" placeholder="Search" name='author' aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+    </form>
+    <br>
+    <br>
+    <div class="row">
+
+        {% for book in books %}
+        <div class="col-sm-3">
+
+            <div class="shadow p-4 mb-5 bg-white rounded ">
+                <img src="https://hips.hearstapps.com/vader-prod.s3.amazonaws.com/1607103404-51zVlazs-SL.jpg?crop=1xw:0.987xh;center,top"
+                     height="100" width="120"><br>
+                <span>Title:</span><br>
+                <p style="color:green;">{{book.name|title}}</p>
+                <span>Author:</span>
+                <p style="color:red;">{{book.author}}</p>
+                <a class="btn btn-primary" href="/details/{{book.pk}}">Read More</a><br>
+            </div>
+
+        </div>
+        {% endfor %}
+
+    </div>
+    <br>
+    <nav aria-label="Page navigation example">
+
+        {% if books.has_other_pages %}
+        <ul class="pagination justify-content-center">
+            {% if books.has_previous %}
+            <li><a href="?page={{ books.previous_page_number }}" tabindex="-1" class="page-link">&laquo;</a></li>
+            {% else %}
+            <li class="disabled"><span>&laquo;</span></li>
+            {% endif %}
+            {% for i in books.paginator.page_range %}
+            {% if users.number == i %}
+            <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+            {% else %}
+            <li><a href="?page={{ i }}" tabindex="-1" class="page-link">{{ i }}</a></li>
+            {% endif %}
+            {% endfor %}
+            {% if books.has_next %}
+            <li><a href="?page={{ books.next_page_number }}" tabindex="-1" class="page-link">&raquo;</a></li>
+            {% else %}
+            <li class="disabled"><span>&raquo;</span></li>
+            {% endif %}
+        </ul>
+        {% endif %}
+    </nav>
+</div>
+{% endblock %}
+
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+</html>

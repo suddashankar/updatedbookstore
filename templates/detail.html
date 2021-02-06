@@ -1,0 +1,64 @@
+{% extends 'home.html' %}
+{% block content %}
+<div class="container mt-5">
+                <div class="d-flex justify-content-left">
+
+    <div class="shadow p-3 mb-5 bg-white rounded">
+
+        <img src="https://hips.hearstapps.com/vader-prod.s3.amazonaws.com/1607103404-51zVlazs-SL.jpg?crop=1xw:0.987xh;center,top"
+             height="100" width="120"><br>
+        <a href="/details/{{book.pk}}">{{book.name}}</a><br>
+        {{book.price}}<br>
+        {{book.author}}<br>
+        {{book.category}}<br>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+            Buynow
+        </button>
+    </div>
+                </div>
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Details</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="{% url 'profile' %}">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="recipient-name" class="col-form-label">Recipient:</label>
+                            <input type="text" name='name' class="form-control" id="recipient-name">
+                        </div>
+                        <div class="form-group">
+                            <label for="recipient-name" class="col-form-label">MobileNumber:</label>
+                            <input type="text" name='mobile' class="form-control" id="recipient-number">
+                        </div>
+                        <div class="form-group">
+                            <label for="recipient-name" class="col-form-label">Email:</label>
+                            <input type="text" name='email' class="form-control" id="recipient-email">
+                        </div>
+                        <div class="form-group">
+                            <label for="recipient-name" class="col-form-label">Address:</label>
+                            <input type="text" name='address' class="form-control" id="recipient-address">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message-text" class="col-form-label">Message:</label>
+                            <textarea class="form-control" name='message' id="message-text"></textarea>
+                        </div>
+
+                        <div class="modal-footer">
+                            <input type="submit" class="btn btn-primary" value="Save">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
